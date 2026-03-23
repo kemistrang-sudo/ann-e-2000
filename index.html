@@ -1,73 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✦ My Y2K Sacred Space ✦</title>
+<title>✦ My Y2K Sacred space ✦</title>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=VT323&family=Nunito:wght@400;900&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════
-   ROOT PALETTE - Flat Y2K Sticker Style
+   PALETTE & CURSEUR
    ═══════════════════════════════════════ */
 :root {
   --bg-color: #FFCCEE;
   --hot-pink: #FF0099;
   --aqua: #00FFFF;
   --yellow: #FFFF00;
-  --purple: #9933FF;
-  --border-thick: 3px solid #000;
-  --hard-shadow: 6px 6px 0px #000;
+  --border: 3px solid #000;
+  --shadow: 6px 6px 0px #000;
 }
+
+* { cursor: none; } /* On cache le vrai curseur pour mettre l'animé */
 
 body {
   margin: 0;
-  padding: 0;
   background-color: var(--bg-color);
-  background-image: radial-gradient(#000 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(var(--hot-pink) 1px, transparent 1px);
+  background-size: 25px 25px;
   font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
+/* CURSEUR ANIMÉ */
+#custom-cursor {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  background: var(--yellow);
+  border: 2px solid black;
+  border-radius: 50%; /* Un petit cercle qui brille */
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 15px var(--yellow);
+  transition: transform 0.1s ease;
+}
+
 /* ═══════════════════════════════════════
-   FLAT DESKTOP SHELF
+   INTERFACE PRINCIPALE (SHELF)
    ═══════════════════════════════════════ */
 .shelf {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  padding: 50px 20px;
+  gap: 30px;
+  padding: 60px 20px;
   flex-wrap: wrap;
 }
 
 .book {
-  width: 120px;
-  height: 160px;
+  width: 130px;
+  height: 170px;
   background: white;
-  border: var(--border-thick);
-  box-shadow: var(--hard-shadow);
+  border: var(--border);
+  box-shadow: var(--shadow);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: transform 0.2s;
+  font-size: 1.3rem;
   text-align: center;
+  transition: 0.1s;
 }
 
 .book:hover {
-  transform: translateY(-10px) rotate(-3deg);
-  background: var(--yellow);
+  transform: scale(1.1) rotate(-3deg);
+  background: var(--aqua);
 }
 
 /* ═══════════════════════════════════════
-   MODAL WINDOWS (THE STICKER LOOK)
+   FENETRES (MODALS)
    ═══════════════════════════════════════ */
 .modal-overlay {
   position: fixed;
   top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.4);
+  background: rgba(255, 0, 153, 0.2);
   display: none;
   justify-content: center;
   align-items: center;
@@ -76,257 +90,151 @@ body {
 
 .modal-window {
   background: white;
-  border: var(--border-thick);
-  box-shadow: 12px 12px 0px var(--hot-pink);
+  border: var(--border);
+  box-shadow: 15px 15px 0px var(--hot-pink);
   width: 90%;
-  max-width: 600px;
-  max-height: 85vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 500px;
+  animation: pop 0.2s ease-out;
 }
 
-@keyframes pop { from { transform: scale(0.8); } to { transform: scale(1); } }
+@keyframes pop { from { transform: scale(0.5); } to { transform: scale(1); } }
 
 .modal-bar {
   background: var(--hot-pink);
-  border-bottom: var(--border-thick);
-  padding: 10px;
+  border-bottom: var(--border);
+  padding: 8px 15px;
   display: flex;
   justify-content: space-between;
   color: white;
   font-family: 'VT323', monospace;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 
-.close-btn { cursor: pointer; background: black; padding: 0 10px; }
+.close-btn { background: var(--yellow); border: 2px solid black; font-weight: bold; padding: 2px 10px; }
 
-.modal-body { padding: 20px; overflow-y: auto; background: #fff; }
+.modal-body { padding: 20px; max-height: 70vh; overflow-y: auto; }
 
 /* ═══════════════════════════════════════
-   MUSIC PLAYER (WINAMP VIBES)
+   WIDGETS (MUSIQUE, GALLERY, DIARY)
    ═══════════════════════════════════════ */
-.winamp-mini {
-  background: #000;
-  color: #00FF00;
-  font-family: 'VT323', monospace;
-  padding: 10px;
-  border: 2px solid #666;
-  margin-bottom: 15px;
+.wa-screen { background: black; color: #00FF00; padding: 10px; font-family: 'VT323', monospace; margin-bottom: 10px; border: 2px solid #555; }
+
+.track { border: 2px solid black; padding: 10px; margin-bottom: 5px; background: #fff; font-weight: bold; display: flex; justify-content: space-between; }
+.track:hover { background: var(--yellow); }
+
+.gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+.upload-zone { border: 3px dashed var(--hot-pink); padding: 20px; text-align: center; background: #fff5fa; }
+
+.taped-photo { 
+  background: white; padding: 8px; border: 2px solid black; position: relative;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+}
+.washi { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 50px; height: 15px; background: rgba(0, 255, 255, 0.6); }
+
+.publish-btn { 
+  background: var(--hot-pink); color: white; border: var(--border); 
+  padding: 10px; width: 100%; font-family: 'VT323', monospace; font-size: 1.5rem;
 }
 
-.track-list {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.track-row {
-  border: 2px solid black;
-  padding: 8px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  background: white;
-}
-
-.track-row:hover { background: var(--aqua); }
-
-/* ═══════════════════════════════════════
-   GALLERY & UPLOAD
-   ═══════════════════════════════════════ */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 15px;
-}
-
-.upload-zone {
-  border: 3px dashed black;
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: #fdfdfd;
-}
-
-.taped-photo {
-  background: white;
-  padding: 10px;
-  border: 2px solid black;
-  position: relative;
-  transform: rotate(-2deg);
-}
-
-.washi-tape {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 20px;
-  background: rgba(255, 0, 153, 0.5);
-}
-
-/* ═══════════════════════════════════════
-   JOURNAL / DIARY
-   ═══════════════════════════════════════ */
-.journal-input-area {
-  border: 2px solid black;
-  padding: 10px;
-  margin-bottom: 20px;
-  background: var(--yellow);
-}
-
-textarea {
-  width: 100%;
-  height: 80px;
-  border: 2px solid black;
-  font-family: 'Architects Daughter', cursive;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-.publish-btn {
-  margin-top: 10px;
-  background: black;
-  color: white;
-  border: none;
-  padding: 5px 15px;
-  font-family: 'VT323', monospace;
-  cursor: pointer;
-}
-
-.entry {
-  border-bottom: 2px dashed black;
-  padding: 10px 0;
-  font-family: 'Architects Daughter', cursive;
-}
-
-.entry-date { font-size: 0.8rem; font-weight: bold; color: var(--hot-pink); }
+textarea { width: 100%; border: 2px solid black; padding: 10px; font-family: 'Architects Daughter'; box-sizing: border-box; }
 
 </style>
 </head>
 <body>
 
+<div id="custom-cursor"></div>
+
 <div class="shelf">
   <div class="book" onclick="openModal('modal-music')" style="border-color: var(--hot-pink);">MUSIC</div>
-  <div class="book" onclick="openModal('modal-gallery')" style="border-color: var(--aqua);">GALLERY</div>
+  <div class="book" onclick="openModal('modal-gallery')" style="border-color: var(--aqua);">PHOTOS</div>
   <div class="book" onclick="openModal('modal-journal')" style="border-color: var(--purple);">DIARY</div>
 </div>
 
 <div id="modal-music" class="modal-overlay" onclick="closeOnBg(event)">
   <div class="modal-window">
-    <div class="modal-bar"><span>WINAMP PLAYER</span><span class="close-btn" onclick="closeModal()">X</span></div>
+    <div class="modal-bar"><span>BARBIE_PLAYER.EXE</span><button class="close-btn" onclick="closeModal()">X</button></div>
     <div class="modal-body">
-      <div class="winamp-mini">
-        <div id="wa-title">NOW PLAYING: SELECT A TRACK</div>
+      <div class="wa-screen">
+        <div id="song-title">SELECT A TRACK...</div>
         <iframe id="yt-player" width="0" height="0" src="" frameborder="0" allow="autoplay"></iframe>
       </div>
-      <div class="track-list">
-        <div class="track-row" onclick="playTrack('dQw4w9WgXcQ', 'Never Gonna Give You Up')">
-          <span>01. Rick Astley</span><span>4:20</span>
-        </div>
-        <div class="track-row" onclick="playTrack('60ItHLz5WEA', 'Alan Walker - Faded')">
-          <span>02. Alan Walker</span><span>3:32</span>
-        </div>
-        <div class="track-row" onclick="playTrack('fKopy74weus', 'Imagine Dragons - Thunder')">
-          <span>03. Imagine Dragons</span><span>3:07</span>
-        </div>
-      </div>
+      <div class="track" onclick="playTrack('60ItHLz5WEA', 'ALAN WALKER')"><span>01. Faded</span><span>3:32</span></div>
+      <div class="track" onclick="playTrack('fKopy74weus', 'IMAGINE DRAGONS')"><span>02. Thunder</span><span>3:07</span></div>
+      <div class="track" onclick="playTrack('dQw4w9WgXcQ', 'RICK ASTLEY')"><span>03. RickRoll</span><span>4:20</span></div>
     </div>
   </div>
 </div>
 
 <div id="modal-gallery" class="modal-overlay" onclick="closeOnBg(event)">
   <div class="modal-window">
-    <div class="modal-bar"><span>PHOTO ALBUM</span><span class="close-btn" onclick="closeModal()">X</span></div>
+    <div class="modal-bar"><span>ALBUM_PHOTO</span><button class="close-btn" onclick="closeModal()">X</button></div>
     <div class="modal-body">
-      <div class="gallery-grid" id="gallery-grid">
-        <label class="upload-zone">
-          <input type="file" hidden accept="image/*" onchange="handleUpload(this)">
-          <span>+ UPLOAD</span>
-          <small>Click to add photo</small>
-        </label>
-      </div>
+      <label class="upload-zone">
+        <input type="file" hidden accept="image/*" onchange="handleUpload(this)">
+        <div style="font-weight: bold;">+ ADD NEW PHOTO</div>
+      </label>
+      <div class="gallery-grid" id="gallery-grid" style="margin-top: 20px;">
+        </div>
     </div>
   </div>
 </div>
 
 <div id="modal-journal" class="modal-overlay" onclick="closeOnBg(event)">
   <div class="modal-window">
-    <div class="modal-bar"><span>MY SECRET DIARY</span><span class="close-btn" onclick="closeModal()">X</span></div>
+    <div class="modal-bar"><span>MY_SECRETS.TXT</span><button class="close-btn" onclick="closeModal()">X</button></div>
     <div class="modal-body">
-      <div class="journal-input-area">
-        <textarea id="journal-input" placeholder="Type your secrets here..."></textarea>
-        <button class="publish-btn" onclick="publishEntry()">PUBLISH ✍️</button>
-      </div>
-      <div id="journal-entries">
-        <div class="entry">
-          <div class="entry-date">2026-03-24</div>
-          <div class="entry-text">Finally finished my Y2K website! It looks so cute now.</div>
-        </div>
-      </div>
+      <textarea id="journal-input" rows="4" placeholder="Write here..."></textarea>
+      <button class="publish-btn" onclick="publishEntry()">PUBLISH ✍️</button>
+      <div id="journal-entries" style="margin-top: 20px;"></div>
     </div>
   </div>
 </div>
 
 <script>
-function openModal(id) {
-  document.getElementById(id).style.display = 'flex';
+// CURSEUR ANIMÉ
+const cursor = document.getElementById('custom-cursor');
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// MODALS
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+function closeOnBg(e) { if(e.target.className === 'modal-overlay') closeModal(); }
+
+// MUSIQUE
+function playTrack(id, title) {
+  document.getElementById('yt-player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  document.getElementById('song-title').textContent = "PLAYING: " + title;
 }
 
-function closeModal() {
-  document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
-}
-
-function closeOnBg(e) {
-  if(e.target.className === 'modal-overlay') closeModal();
-}
-
-function playTrack(vidId, title) {
-  const player = document.getElementById('yt-player');
-  player.src = `https://www.youtube.com/embed/${vidId}?autoplay=1`;
-  document.getElementById('wa-title').textContent = "NOW PLAYING: " + title;
-}
-
+// GALLERY
 function handleUpload(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function(e) {
-      const grid = document.getElementById('gallery-grid');
-      const photoDiv = document.createElement('div');
-      photoDiv.className = 'taped-photo';
-      photoDiv.innerHTML = `
-        <div class="washi-tape"></div>
-        <img src="${e.target.result}" style="width:100%; aspect-ratio:1; object-fit:cover; border:1px solid black;">
-      `;
-      grid.appendChild(photoDiv);
+      const div = document.createElement('div');
+      div.className = 'taped-photo';
+      div.innerHTML = `<div class="washi"></div><img src="${e.target.result}" style="width:100%; aspect-ratio:1; object-fit:cover; border:1px solid black;">`;
+      document.getElementById('gallery-grid').prepend(div);
     };
     reader.readAsDataURL(input.files[0]);
   }
 }
 
+// JOURNAL
 function publishEntry() {
-  const input = document.getElementById('journal-input');
-  const text = input.value;
+  const text = document.getElementById('journal-input').value;
   if(!text) return;
-
-  const container = document.getElementById('journal-entries');
-  const entry = document.createElement('div');
-  entry.className = 'entry';
-  const date = new Date().toISOString().split('T')[0];
-  
-  entry.innerHTML = `
-    <div class="entry-date">${date}</div>
-    <div class="entry-text">${text}</div>
-  `;
-  
-  container.prepend(entry);
-  input.value = '';
+  const div = document.createElement('div');
+  div.style.borderBottom = "2px dashed black";
+  div.style.padding = "10px 0";
+  div.style.fontFamily = "'Architects Daughter'";
+  div.innerHTML = `<small style="color:var(--hot-pink)">${new Date().toLocaleDateString()}</small><br>${text}`;
+  document.getElementById('journal-entries').prepend(div);
+  document.getElementById('journal-input').value = '';
 }
 </script>
 
